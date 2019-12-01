@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <div class="container jumbotron content-section">
+
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+
+            <div class="row">
+                {{ form.title.label(class="form-control-label") }}
+                {% if form.title.errors %}
+                    {{ form.title(class="form-control form-control is-invalid") }}
+
+                    <div class="invalid-feedback">
+                        {% for error in form.title.errors %}
+                            <small>{{error}}</small>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.title(class="form-control form-control") }}
+                {% endif %}
+            </div>
+
+            <div class="row">
+                {{ form.content.label(class="form-control-label") }}
+                {% if form.content.errors %}
+                    {{ form.content(class="form-control form-control is-invalid") }}
+
+                    <div class="invalid-feedback">
+                        {% for error in form.content.errors %}
+                            <small>{{error}}</small>
+                        {% endfor %}
+                    </div>
+
+                {% else %}
+                    {{ form.content(class="form-control form-control") }}
+                {% endif %}
+            </div>
+
+        </fieldset>
+
+        <div class="row">
+            {{ form.submit(class="btn btn-dark") }}
+        </div>
+        
+    </form>
+    </div>
+
+{% endblock %}

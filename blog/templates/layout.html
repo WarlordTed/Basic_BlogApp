@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+        <!--Import bootstrap.css-->
+        <link rel="stylesheet" href="{{ url_for('static',filename = 'bootstrap/css/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static',filename = 'bootstrap/css/bootstrap.min.css') }}">
+        
+        <!--Import jQuery before bootstrap.js-->
+        <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.js')}}"></script>
+        <script src="{{url_for('static',filename = 'bootstrap/js/bootstrap.min.js')}}"></script>
+
+        {% if title %}
+            <title>Blog Shlog - {{ title }}</title>
+        {% else %}
+            <title>Blog Shlog</title>
+        {% endif %}
+    </head>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a href="{{ url_for('home') }}" class="navbar-brand"><strong>Blog-Shlog</strong></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('about') }}">About</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                    <li>
+                        <a class="nav-link" href="{{ url_for('new_post') }}">Add new post</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="{{ url_for('account') }}">{{ current_user.username }}</a>
+                    </li>
+                    <li>                    
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <body>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    </body>
+</html> 

@@ -1,0 +1,69 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+    <div class="content-section jumbotron">
+        <div class="media">
+            <img src="{{ image_file }}" class="align-self-start rounded-circle">
+            <div class="media-body">
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p>{{ current_user.email }}</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <fieldset class="form-group">
+
+                <div class="row">
+                    {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control is-invalid") }}
+
+                        <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                            <small>{{error}}</small>
+                        {% endfor %}
+                        </div>
+
+                    {% else %}
+                        {{ form.username(class="form-control form-control") }}
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control is-invalid") }}
+
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <small>{{error}}</small>
+                            {% endfor %}
+                        </div>
+
+                    {% else %}
+                        {{ form.email(class="form-control form-control") }}
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    {{ form.image.label() }}
+                    {{ form.image(class="form-control-file") }}
+                    {% if form.image.errors %}
+                        {% for error in form.image.errors %}
+                            <small class="text-danger">{{error}}</small>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                
+                </fieldset>
+
+                <div class="row">
+                    {{ form.submit(class="btn btn-dark") }}
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

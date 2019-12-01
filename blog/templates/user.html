@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block body %}
+
+    <h1>Posts by - {{ user.username }} ({{ posts.total }})</h1>
+    {% for post in posts.items %}
+        <div class="container content-section">
+        <div class="card w-75">
+            <div class="media">
+                <img src="{{ url_for('static', filename='image/' + post.author.image_file) }}" class="align-self-start mr-3 rounded-circle article-img">
+                <div class="media-body">
+                    <div class="card-body">
+                        <h3 class="card-title mt-0"><a href="{{ url_for('post', p_id = post.id) }}">{{ post.title }}</a></h3>
+                        <h5 class="card-subtitle mb-2 text-muted">By <a href="{{ url_for('userposts', username=post.author.username) }}">{{ post.author.username }}</a> on {{ post.date_posted }}</h5>
+                        <p class="card-text">{{ post.content }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <hr>
+    {% endfor %}
+
+    <nav>
+    <ul class="pagination">
+        {% for num in posts.iter_pages(left_edge = 1,right_edge = 3,left_current = 1,right_current = 2) %}
+            {% if num %}
+                {% if posts.page == num %}
+                    <li class="page-item active"><a class="page-link" href="{{ url_for('userposts', username=user.username, page=num) }}">{{ num }}</a></li>
+                {% else %}    
+                    <li class="page-item"><a class="page-link" href="{{ url_for('userposts', username=user.username, page=num) }}">{{ num }}</a></li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    </nav>
+
+{% endblock %}
